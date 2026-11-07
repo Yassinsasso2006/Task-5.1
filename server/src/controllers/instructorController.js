@@ -47,7 +47,7 @@ export async function loginInstructor(req, res, next) {
       return res.status(400).json({ message: 'Invalid input types' });
     }
 
-    const instructor = await Instructor.findOne({ username: String(username) });;
+    const instructor = await Instructor.findOne({ username: String(username) }).select('+password');
     if (!instructor) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
@@ -90,10 +90,14 @@ export async function searchInstructors(req, res, next) {
 
 
     // Sanitize req.query to strip out $ and . operators
-    const sanitizedQuery = mongoSanitize.sanitize(req.query);
+    const filter = {};
+    for (const [key, value] of Object.entries(req.query)) {
+      if (!key.includes('$') && !key.includes('.')) {
+        filter[key] = value;
+      }
+    }
 
-    // We need to santize and wipe down the query of any germs
-    const instructors = await Instructor.find(sanitizedQuery)
+    const instructors = await Instructor.find(filter)
       .select('name department role username')
       .lean();
       
