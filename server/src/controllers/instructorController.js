@@ -92,7 +92,9 @@ export async function searchInstructors(req, res, next) {
     // Sanitize req.query to strip out $ and . operators
     const filter = {};
     for (const [key, value] of Object.entries(req.query)) {
-      if (!key.includes('$') && !key.includes('.')) {
+      // Discard any parameter if its value is an object
+      // or if the key contains dangerous characters.
+      if (value !== null && typeof value !== 'object' && !key.includes('$') && !key.includes('.')) {
         filter[key] = value;
       }
     }
