@@ -1,6 +1,6 @@
 import { Instructor } from '../models/Instructor.js';
 import mongoSantize from 'express-mongo-sanitize';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 // =============================================================================
 //  INSTRUCTOR PORTAL CONTROLLER  —  ⚠️ INTENTIONALLY VULNERABLE (security lab)
