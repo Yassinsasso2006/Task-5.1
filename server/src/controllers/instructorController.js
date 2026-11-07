@@ -47,7 +47,7 @@ export async function loginInstructor(req, res, next) {
       return res.status(400).json({ message: 'Invalid input types' });
     }
 
-    const instructor = await Instructor.findOne({ username });
+    const instructor = await Instructor.findOne({ username: String(username) });;
     if (!instructor) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }

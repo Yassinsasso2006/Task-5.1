@@ -7,11 +7,11 @@ import userRoutes from './routes/users.js';
 import instructorRoutes from './routes/instructors.js';
 import mongoSantize from 'express-mongo-sanitize';
 
-const app = express();
-app.use(mongoSantize()); // Prevent NoSQL injection attacks by sanitizing user input
+const app = express();; // Prevent NoSQL injection attacks by sanitizing user input
 app.use(morgan('dev'));
 app.use(cors({ origin: 'http://localhost:5175', credentials: false }));
 app.use(express.json());
+app.use(mongoSantize())
 
 app.get('/api/health', (req, res) => res.json({ ok: true }));
 
